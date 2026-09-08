@@ -686,15 +686,17 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
                             <td>                            
             <input type="radio" name="selectedFile" onchange="onSelectFileChanged(this.value,1)" id="option1" value=";========开始换盘 =================
 
-; swap swapmod - stl A2L start / v 01-00 20260725
-;plate-swap start
-G28 X Y
+; swap swapmod-stl A2L start / v 01-00 20260725
+
 G0 X-40 F8000
 G0 Y305 F8000
 G0 Y333 F1500
+G0 Z20 F10000
 G0 Z-20 F10000
 G0 Y300 F500
+
 G0 Z320 F10000
+
 G0 Y-1 F500
 G0 Y50 F1000
 G0 Y290 F5000
@@ -714,7 +716,31 @@ G0 Y305 F8000
 G0 Y333 F500
 G0 Y120 F8000
 
-;plate-swap end
+
+G28 X Y
+
+;===== detection start =====
+;===== build_plate_detect_flag start =====
+M1002 judge_flag build_plate_detect_flag
+M622 S1
+  G91
+  G1 Z5 F1200
+  G90
+  G0 X15 F30000
+  G0 Y319 F3000
+  G91
+  G1 Z-5 F1200
+  G28 Z P0 T140
+  G1 F1200
+  G39.4
+  G90
+  G1 Z5 F1200
+M623
+;===== build_plate_detect_flag end =====
+;===== detection end =====
+
+
+;swap end 
 ;=======换板结束===================="> A2L                      
         <script>window.onload = function() { 
             setTimeout(function() { loadSelectFile();
